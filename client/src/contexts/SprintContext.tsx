@@ -47,7 +47,7 @@ export const SprintProvider: React.FC<SprintProviderProps> = ({ children }) => {
     setStories(loadedStories);
   }, []);
 
-  // Автоматическое обновление статуса enabled при изменении назначений
+  // Автоматическое обновление статуса enabled при изменении назначений (v2)
   useEffect(() => {
     setStories(prev => prev.map(story => ({
       ...story,
