@@ -86,7 +86,7 @@ export default function BacklogPanel({ stories, onStoryClick }: BacklogPanelProp
             <div className="absolute top-full left-0 mt-1 w-56 bg-white z-50 shadow-lg border border-gray-200 rounded-md overflow-hidden">
               <button
                 onClick={() => { setSortBy('priority'); setShowSortMenu(false); }}
-                className={`w-full text-left px-4 py-2 hover:bg-gray-100 flex items-center ${sortBy === 'priority' ? 'bg-teal-100 font-semibold' : ''}`}
+                className={`w-full text-left px-4 py-2 hover:bg-gray-100 flex items-center text-gray-900 ${sortBy === 'priority' ? 'bg-teal-100 font-semibold' : ''}`}
               >
                 <span className="mr-2">🔥</span>
                 По приоритету
@@ -94,7 +94,7 @@ export default function BacklogPanel({ stories, onStoryClick }: BacklogPanelProp
               </button>
               <button
                 onClick={() => { setSortBy('risk'); setShowSortMenu(false); }}
-                className={`w-full text-left px-4 py-2 hover:bg-gray-100 flex items-center ${sortBy === 'risk' ? 'bg-teal-100 font-semibold' : ''}`}
+                className={`w-full text-left px-4 py-2 hover:bg-gray-100 flex items-center text-gray-900 ${sortBy === 'risk' ? 'bg-teal-100 font-semibold' : ''}`}
               >
                 <span className="mr-2">⚠️</span>
                 По риску
@@ -102,7 +102,7 @@ export default function BacklogPanel({ stories, onStoryClick }: BacklogPanelProp
               </button>
               <button
                 onClick={() => { setSortBy('points'); setShowSortMenu(false); }}
-                className={`w-full text-left px-4 py-2 hover:bg-gray-100 flex items-center ${sortBy === 'points' ? 'bg-teal-100 font-semibold' : ''}`}
+                className={`w-full text-left px-4 py-2 hover:bg-gray-100 flex items-center text-gray-900 ${sortBy === 'points' ? 'bg-teal-100 font-semibold' : ''}`}
               >
                 <span className="mr-2">📊</span>
                 По story points
@@ -110,7 +110,7 @@ export default function BacklogPanel({ stories, onStoryClick }: BacklogPanelProp
               </button>
               <button
                 onClick={() => { setSortBy('alphabetical'); setShowSortMenu(false); }}
-                className={`w-full text-left px-4 py-2 hover:bg-gray-100 flex items-center ${sortBy === 'alphabetical' ? 'bg-teal-100 font-semibold' : ''}`}
+                className={`w-full text-left px-4 py-2 hover:bg-gray-100 flex items-center text-gray-900 ${sortBy === 'alphabetical' ? 'bg-teal-100 font-semibold' : ''}`}
               >
                 <span className="mr-2">🔤</span>
                 По алфавиту
