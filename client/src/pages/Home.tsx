@@ -220,8 +220,8 @@ export default function Home() {
             onStoryClick={(id) => setSelectedStory(id)}
           />
           
-          <div id="sprint-board" className="flex-1 p-6 overflow-x-auto">
-            <div className="flex gap-4 min-w-max">
+          <div id="sprint-board" className="flex-1 p-4 overflow-x-auto">
+            <div className="flex gap-3 min-w-max">
               {sprints.map(sprint => (
                 <SprintColumn
                   key={sprint.id}

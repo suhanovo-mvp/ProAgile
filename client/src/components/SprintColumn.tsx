@@ -68,7 +68,7 @@ export default function SprintColumn({ sprint, stories, onStoryClick }: SprintCo
   };
 
   return (
-    <div className="flex-1 min-w-[280px]">
+    <div className="flex-1 min-w-[240px] max-w-[280px]">
       <div className="mb-3">
         <h2 className="text-lg font-bold mb-2">{sprint.label}</h2>
         <div className="flex items-center gap-2">
