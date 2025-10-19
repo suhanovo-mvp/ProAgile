@@ -7,9 +7,10 @@ import { Card } from '@/components/ui/card';
 interface SprintColumnProps {
   sprint: Sprint;
   stories: UserStory[];
+  onStoryClick?: (storyId: number) => void;
 }
 
-export default function SprintColumn({ sprint, stories }: SprintColumnProps) {
+export default function SprintColumn({ sprint, stories, onStoryClick }: SprintColumnProps) {
   const { setNodeRef, isOver } = useDroppable({
     id: sprint.id,
   });
@@ -51,7 +52,11 @@ export default function SprintColumn({ sprint, stories }: SprintColumnProps) {
             </div>
           ) : (
             sprintStories.map(story => (
-              <UserStoryCard key={story.id} story={story} />
+              <UserStoryCard 
+                key={story.id} 
+                story={story} 
+                onClick={() => onStoryClick?.(story.id)}
+              />
             ))
           )}
         </SortableContext>

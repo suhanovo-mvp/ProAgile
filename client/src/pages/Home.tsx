@@ -13,6 +13,7 @@ import SprintColumn from '@/components/SprintColumn';
 import BacklogPanel from '@/components/BacklogPanel';
 import UserStoryCard from '@/components/UserStoryCard';
 import InstructionsModal from '@/components/InstructionsModal';
+import UserStoryDetailModal from '@/components/UserStoryDetailModal';
 import { Button } from '@/components/ui/button';
 import { RotateCcw, Download, Info } from 'lucide-react';
 import { jsPDF } from 'jspdf';
@@ -23,6 +24,7 @@ export default function Home() {
   const { stories, sprints, moveStory, resetSimulation } = useSprintContext();
   const [activeId, setActiveId] = useState<number | null>(null);
   const [showInstructions, setShowInstructions] = useState(true);
+  const [selectedStory, setSelectedStory] = useState<number | null>(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -130,6 +132,12 @@ export default function Home() {
         onClose={() => setShowInstructions(false)}
       />
 
+      <UserStoryDetailModal
+        story={selectedStory !== null ? stories.find(s => s.id === selectedStory) || null : null}
+        open={selectedStory !== null}
+        onOpenChange={(open) => !open && setSelectedStory(null)}
+      />
+
       <header className="bg-white shadow-sm border-b">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
@@ -172,7 +180,10 @@ export default function Home() {
         onDragEnd={handleDragEnd}
       >
         <div className="flex h-[calc(100vh-73px)]">
-          <BacklogPanel stories={stories} />
+          <BacklogPanel 
+            stories={stories} 
+            onStoryClick={(id) => setSelectedStory(id)}
+          />
           
           <div id="sprint-board" className="flex-1 p-6 overflow-x-auto">
             <div className="flex gap-4 min-w-max">
@@ -181,6 +192,7 @@ export default function Home() {
                   key={sprint.id}
                   sprint={sprint}
                   stories={stories}
+                  onStoryClick={(id) => setSelectedStory(id)}
                 />
               ))}
             </div>

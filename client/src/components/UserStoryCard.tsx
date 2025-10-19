@@ -8,9 +8,10 @@ import { AlertCircle, Lock } from 'lucide-react';
 interface UserStoryCardProps {
   story: UserStory;
   inBacklog?: boolean;
+  onClick?: () => void;
 }
 
-export default function UserStoryCard({ story, inBacklog = false }: UserStoryCardProps) {
+export default function UserStoryCard({ story, inBacklog = false, onClick }: UserStoryCardProps) {
   const {
     attributes,
     listeners,
@@ -51,7 +52,15 @@ export default function UserStoryCard({ story, inBacklog = false }: UserStoryCar
       {...listeners}
       className={`${isDisabled ? 'opacity-50 cursor-not-allowed' : 'cursor-grab active:cursor-grabbing'}`}
     >
-      <Card className={`p-3 mb-2 hover:shadow-md transition-shadow ${isDisabled ? 'bg-gray-100' : 'bg-white'}`}>
+      <Card 
+        className={`p-3 mb-2 hover:shadow-md transition-shadow ${isDisabled ? 'bg-gray-100' : 'bg-white'}`}
+        onClick={(e) => {
+          if (!isDisabled && onClick) {
+            e.stopPropagation();
+            onClick();
+          }
+        }}
+      >
         <div className="flex items-start gap-3">
           <div className={`w-8 h-8 rounded-full ${getPriorityColor(story.priority)} flex items-center justify-center text-white font-bold text-sm flex-shrink-0`}>
             {story.points}

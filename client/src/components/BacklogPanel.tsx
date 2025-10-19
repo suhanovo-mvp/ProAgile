@@ -15,9 +15,10 @@ import {
 
 interface BacklogPanelProps {
   stories: UserStory[];
+  onStoryClick?: (storyId: number) => void;
 }
 
-export default function BacklogPanel({ stories }: BacklogPanelProps) {
+export default function BacklogPanel({ stories, onStoryClick }: BacklogPanelProps) {
   const { setNodeRef, isOver } = useDroppable({
     id: 'backlog',
   });
@@ -95,7 +96,12 @@ export default function BacklogPanel({ stories }: BacklogPanelProps) {
       >
         <SortableContext items={sortedStories.map(s => s.id)} strategy={verticalListSortingStrategy}>
           {sortedStories.map(story => (
-            <UserStoryCard key={story.id} story={story} inBacklog />
+            <UserStoryCard 
+              key={story.id} 
+              story={story} 
+              inBacklog 
+              onClick={() => onStoryClick?.(story.id)}
+            />
           ))}
         </SortableContext>
       </div>
