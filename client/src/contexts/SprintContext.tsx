@@ -2,6 +2,8 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 import { UserStory, Sprint } from '@/types';
 import userStoriesData from '@/data/userStories.json';
 
+// Sprint Context: управление состоянием историй и спринтов
+
 interface SprintContextType {
   stories: UserStory[];
   sprints: Sprint[];
