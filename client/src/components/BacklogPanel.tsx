@@ -69,23 +69,48 @@ export default function BacklogPanel({ stories, onStoryClick }: BacklogPanelProp
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="w-full bg-white text-gray-900">
+            <Button variant="outline" className="w-full bg-white text-gray-900 hover:bg-gray-100">
               <SortAsc className="w-4 h-4 mr-2" />
               Сортировка
+              {sortBy && (
+                <span className="ml-auto text-xs text-teal-600 font-semibold">
+                  ✓
+                </span>
+              )}
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56">
-            <DropdownMenuItem onClick={() => setSortBy('priority')}>
+          <DropdownMenuContent className="w-56 bg-white z-50 shadow-lg border border-gray-200">
+            <DropdownMenuItem 
+              onClick={() => setSortBy('priority')}
+              className={`cursor-pointer ${sortBy === 'priority' ? 'bg-teal-100 font-semibold' : ''}`}
+            >
+              <span className="mr-2">🔥</span>
               По приоритету
+              {sortBy === 'priority' && <span className="ml-auto">✓</span>}
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setSortBy('risk')}>
+            <DropdownMenuItem 
+              onClick={() => setSortBy('risk')}
+              className={`cursor-pointer ${sortBy === 'risk' ? 'bg-teal-100 font-semibold' : ''}`}
+            >
+              <span className="mr-2">⚠️</span>
               По риску
+              {sortBy === 'risk' && <span className="ml-auto">✓</span>}
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setSortBy('points')}>
+            <DropdownMenuItem 
+              onClick={() => setSortBy('points')}
+              className={`cursor-pointer ${sortBy === 'points' ? 'bg-teal-100 font-semibold' : ''}`}
+            >
+              <span className="mr-2">📊</span>
               По story points
+              {sortBy === 'points' && <span className="ml-auto">✓</span>}
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setSortBy('alphabetical')}>
+            <DropdownMenuItem 
+              onClick={() => setSortBy('alphabetical')}
+              className={`cursor-pointer ${sortBy === 'alphabetical' ? 'bg-teal-100 font-semibold' : ''}`}
+            >
+              <span className="mr-2">🔤</span>
               По алфавиту
+              {sortBy === 'alphabetical' && <span className="ml-auto">✓</span>}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
