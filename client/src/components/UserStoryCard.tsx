@@ -37,8 +37,8 @@ export default function UserStoryCard({ story, inBacklog = false, onClick }: Use
   };
 
   const getRiskColor = (risk: string) => {
-    if (risk === 'high') return 'text-red-500';
-    if (risk === 'moderate') return 'text-yellow-500';
+    if (risk === 'Высокий') return 'text-red-500';
+    if (risk === 'Средний') return 'text-yellow-500';
     return 'text-green-500';
   };
 

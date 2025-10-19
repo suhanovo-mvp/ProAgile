@@ -42,7 +42,7 @@ export default function BacklogPanel({ stories, onStoryClick }: BacklogPanelProp
         const priorityB = parseInt(b.priority.match(/\((\d+)\)/)?.[1] || '999');
         return priorityA - priorityB;
       case 'risk':
-        const riskOrder = { high: 0, moderate: 1, low: 2 };
+        const riskOrder: Record<string, number> = { 'Высокий': 0, 'Средний': 1, 'Низкий': 2 };
         return riskOrder[a.risk] - riskOrder[b.risk];
       case 'points':
         return b.points - a.points;

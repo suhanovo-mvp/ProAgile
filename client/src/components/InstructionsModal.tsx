@@ -99,7 +99,7 @@ export default function InstructionsModal({ isOpen, onClose }: InstructionsModal
                 <ul className="list-disc list-inside space-y-1 text-sm text-amber-800">
                   <li><strong>Story Points:</strong> Оценка сложности реализации (1-5 points)</li>
                   <li><strong>Приоритет:</strong> Бизнес-важность истории (1 - высокий, 2 - средний, 3 - низкий)</li>
-                  <li><strong>Риск:</strong> Вероятность проблем при реализации (Low, Moderate, High)</li>
+                  <li><strong>Риск:</strong> Вероятность проблем при реализации (Низкий, Средний, Высокий)</li>
                   <li><strong>Зависимости:</strong> Истории, которые должны быть выполнены ранее</li>
                 </ul>
               </div>
@@ -143,15 +143,15 @@ export default function InstructionsModal({ isOpen, onClose }: InstructionsModal
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 bg-green-200 rounded"></div>
-                    <span><strong>Зеленый (Low):</strong> Низкий риск - простые задачи с понятной реализацией</span>
+                    <span><strong>Зеленый (Низкий):</strong> Низкий риск - простые задачи с понятной реализацией</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 bg-yellow-200 rounded"></div>
-                    <span><strong>Желтый (Moderate):</strong> Средний риск - требуют дополнительного времени или экспертизы</span>
+                    <span><strong>Желтый (Средний):</strong> Средний риск - требуют дополнительного времени или экспертизы</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 bg-red-200 rounded"></div>
-                    <span><strong>Красный (High):</strong> Высокий риск - сложные задачи с неопределенностью</span>
+                    <span><strong>Красный (Высокий):</strong> Высокий риск - сложные задачи с неопределенностью</span>
                   </div>
                   <p className="mt-2 text-gray-600">
                     Фон спринта автоматически отображает пропорциональное распределение рисков по story points.

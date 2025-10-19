@@ -30,9 +30,9 @@ export default function SprintColumn({ sprint, stories, onStoryClick }: SprintCo
     const riskPoints = { low: 0, moderate: 0, high: 0 };
     
     sprintStories.forEach(story => {
-      if (story.risk === 'low') riskPoints.low += story.points;
-      else if (story.risk === 'moderate') riskPoints.moderate += story.points;
-      else if (story.risk === 'high') riskPoints.high += story.points;
+      if (story.risk === 'Низкий') riskPoints.low += story.points;
+      else if (story.risk === 'Средний') riskPoints.moderate += story.points;
+      else if (story.risk === 'Высокий') riskPoints.high += story.points;
     });
     
     return {

@@ -38,9 +38,9 @@ export default function UserStoryDetailModal({
   };
 
   const riskColors: Record<string, string> = {
-    low: "bg-green-100 text-green-800 border-green-300",
-    moderate: "bg-yellow-100 text-yellow-800 border-yellow-300",
-    high: "bg-red-100 text-red-800 border-red-300",
+    'Низкий': "bg-green-100 text-green-800 border-green-300",
+    'Средний': "bg-yellow-100 text-yellow-800 border-yellow-300",
+    'Высокий': "bg-red-100 text-red-800 border-red-300",
   };
 
   return (
@@ -82,8 +82,8 @@ export default function UserStoryDetailModal({
 
             <div className="flex flex-col items-center p-4 bg-purple-50 rounded-lg border border-purple-200">
               <Clock className="w-6 h-6 text-purple-600 mb-2" />
-              <div className="text-lg font-semibold text-purple-900 capitalize">
-                {story.risk === 'low' ? 'Низкий' : story.risk === 'moderate' ? 'Средний' : 'Высокий'}
+              <div className="text-lg font-semibold text-purple-900">
+                {story.risk}
               </div>
               <div className="text-sm text-purple-700">Уровень риска</div>
             </div>
@@ -101,7 +101,7 @@ export default function UserStoryDetailModal({
               variant="outline"
               className={riskColors[story.risk]}
             >
-              Риск: {story.risk === 'low' ? 'Низкий' : story.risk === 'moderate' ? 'Средний' : 'Высокий'}
+              Риск: {story.risk}
             </Badge>
             <Badge variant="outline" className="bg-blue-100 text-blue-800 border-blue-300">
               {story.points} SP

@@ -6,7 +6,7 @@ export interface UserStory {
   enabled: boolean;
   type: string;
   description: string;
-  risk: 'low' | 'moderate' | 'high';
+  risk: 'Низкий' | 'Средний' | 'Высокий';
   priority: string;
   assignedTo?: string | number | null;
 }
