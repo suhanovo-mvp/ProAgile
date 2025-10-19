@@ -5,7 +5,7 @@ import userStoriesData from '@/data/userStories.json';
 interface SprintContextType {
   stories: UserStory[];
   sprints: Sprint[];
-  moveStory: (storyId: number, sprintId: number | null) => boolean;
+  moveStory: (storyId: number, sprintId: string | number | null) => boolean;
   resetSimulation: () => void;
   searchTerm: string;
   setSearchTerm: (term: string) => void;
@@ -30,9 +30,9 @@ interface SprintProviderProps {
 export const SprintProvider: React.FC<SprintProviderProps> = ({ children }) => {
   const [stories, setStories] = useState<UserStory[]>([]);
   const [sprints, setSprints] = useState<Sprint[]>([
-    { id: 1, label: 'Спринт 1', maxPoints: 20, currPoints: 0, taskIds: [] },
-    { id: 2, label: 'Спринт 2', maxPoints: 20, currPoints: 0, taskIds: [] },
-    { id: 3, label: 'Спринт 3', maxPoints: 20, currPoints: 0, taskIds: [] },
+    { id: 'sprint-1', label: 'Спринт 1', maxPoints: 20, currPoints: 0, taskIds: [] },
+    { id: 'sprint-2', label: 'Спринт 2', maxPoints: 20, currPoints: 0, taskIds: [] },
+    { id: 'sprint-3', label: 'Спринт 3', maxPoints: 20, currPoints: 0, taskIds: [] },
   ]);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('priority');
@@ -54,7 +54,7 @@ export const SprintProvider: React.FC<SprintProviderProps> = ({ children }) => {
     );
   };
 
-  const moveStory = (storyId: number, targetSprintId: number | null): boolean => {
+  const moveStory = (storyId: number, targetSprintId: string | number | null): boolean => {
     const story = stories.find(s => s.id === storyId);
     if (!story) return false;
 

@@ -49,11 +49,11 @@ export default function Home() {
     const storyId = active.id as number;
     const targetId = over.id;
 
-    let targetSprintId: number | null = null;
+    let targetSprintId: string | number | null = null;
 
     if (targetId === 'backlog') {
       targetSprintId = null;
-    } else if (typeof targetId === 'number') {
+    } else if (typeof targetId === 'number' || typeof targetId === 'string') {
       const sprint = sprints.find(s => s.id === targetId);
       if (sprint) {
         targetSprintId = sprint.id;

@@ -8,11 +8,11 @@ export interface UserStory {
   description: string;
   risk: 'low' | 'moderate' | 'high';
   priority: string;
-  assignedTo?: number | null;
+  assignedTo?: string | number | null;
 }
 
 export interface Sprint {
-  id: number;
+  id: string | number;
   label: string;
   maxPoints: number;
   currPoints: number;
