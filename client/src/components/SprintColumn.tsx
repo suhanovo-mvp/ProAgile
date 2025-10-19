@@ -4,6 +4,10 @@ import { Sprint, UserStory } from '@/types';
 import UserStoryCard from './UserStoryCard';
 import { Card } from '@/components/ui/card';
 
+/**
+ * SprintColumn - Компонент колонки спринта с градиентной индикацией рисков
+ * Оптимизирован для MacBook 13" (min-w-240px, max-w-280px)
+ */
 interface SprintColumnProps {
   sprint: Sprint;
   stories: UserStory[];
