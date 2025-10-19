@@ -7,7 +7,6 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
-  closestCenter,
 } from '@dnd-kit/core';
 import { useSprintContext } from '@/contexts/SprintContext';
 import SprintColumn from '@/components/SprintColumn';
@@ -177,7 +176,6 @@ export default function Home() {
 
       <DndContext
         sensors={sensors}
-        collisionDetection={closestCenter}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
       >

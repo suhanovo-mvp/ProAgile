@@ -1,4 +1,4 @@
-import { useDraggable } from '@dnd-kit/core';
+import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { UserStory } from '@/types';
 import { Card } from '@/components/ui/card';
@@ -17,14 +17,16 @@ export default function UserStoryCard({ story, inBacklog = false, onClick }: Use
     listeners,
     setNodeRef,
     transform,
+    transition,
     isDragging,
-  } = useDraggable({
+  } = useSortable({
     id: story.id,
     disabled: !story.enabled && inBacklog,
   });
 
   const style = {
-    transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
+    transform: CSS.Transform.toString(transform),
+    transition,
     opacity: isDragging ? 0.5 : 1,
   };
 

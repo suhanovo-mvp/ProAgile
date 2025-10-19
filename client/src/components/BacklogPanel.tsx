@@ -1,4 +1,5 @@
 import { useDroppable } from '@dnd-kit/core';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { UserStory } from '@/types';
 import UserStoryCard from './UserStoryCard';
 import { Input } from '@/components/ui/input';
@@ -93,16 +94,16 @@ export default function BacklogPanel({ stories, onStoryClick }: BacklogPanelProp
           isOver ? 'bg-teal-600 ring-2 ring-teal-400 shadow-lg' : ''
         }`}
       >
-          <div className="space-y-2">
-            {sortedStories.map(story => (
-              <UserStoryCard 
-                key={story.id} 
-                story={story} 
-                inBacklog 
-                onClick={() => onStoryClick?.(story.id)}
-              />
-            ))}
-          </div>
+        <SortableContext items={sortedStories.map(s => s.id)} strategy={verticalListSortingStrategy}>
+          {sortedStories.map(story => (
+            <UserStoryCard 
+              key={story.id} 
+              story={story} 
+              inBacklog 
+              onClick={() => onStoryClick?.(story.id)}
+            />
+          ))}
+        </SortableContext>
       </div>
 
       <div className="mt-4 text-xs text-teal-200">
