@@ -25,7 +25,7 @@ export default function UserStoryDetailModal({
   
   if (!story) return null;
   
-  // Функция для получения названия истории по ID
+  // Функция для получения названия истории по ID для отображения в зависимостях
   const getStoryLabel = (id: number): string => {
     const dependentStory = stories.find(s => s.id === id);
     return dependentStory ? dependentStory.label : `История #${id}`;
