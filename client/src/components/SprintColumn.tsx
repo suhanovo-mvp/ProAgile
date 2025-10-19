@@ -1,5 +1,4 @@
 import { useDroppable } from '@dnd-kit/core';
-import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { Sprint, UserStory } from '@/types';
 import UserStoryCard from './UserStoryCard';
 import { Card } from '@/components/ui/card';
@@ -45,7 +44,6 @@ export default function SprintColumn({ sprint, stories, onStoryClick }: SprintCo
           isOver ? 'bg-cyan-100 border-2 border-cyan-500 shadow-lg ring-2 ring-cyan-300' : 'bg-gray-50 border border-gray-200'
         }`}
       >
-        <SortableContext items={sprintStories.map(s => s.id)} strategy={verticalListSortingStrategy}>
           {sprintStories.length === 0 ? (
             <div className="flex items-center justify-center h-32 text-gray-400 text-sm">
               Перетащите истории сюда
@@ -59,7 +57,6 @@ export default function SprintColumn({ sprint, stories, onStoryClick }: SprintCo
               />
             ))
           )}
-        </SortableContext>
       </Card>
     </div>
   );
