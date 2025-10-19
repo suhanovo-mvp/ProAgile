@@ -39,10 +39,10 @@ export default function SprintColumn({ sprint, stories, onStoryClick }: SprintCo
         </div>
       </div>
       
-      <Card
+      <div
         ref={setNodeRef}
-        className={`min-h-[500px] p-4 transition-all duration-200 ${
-          isOver ? 'bg-cyan-100 border-2 border-cyan-500 shadow-lg ring-2 ring-cyan-300' : 'bg-gray-50 border border-gray-200'
+        className={`min-h-[500px] p-4 rounded-lg transition-all duration-200 ${
+          isOver ? 'bg-cyan-100 border-2 border-cyan-500 shadow-lg ring-4 ring-cyan-300' : 'bg-gray-50 border border-gray-200'
         }`}
       >
         <SortableContext items={sprintStories.map(s => s.id)} strategy={verticalListSortingStrategy}>
@@ -51,16 +51,18 @@ export default function SprintColumn({ sprint, stories, onStoryClick }: SprintCo
               Перетащите истории сюда
             </div>
           ) : (
-            sprintStories.map(story => (
-              <UserStoryCard 
-                key={story.id} 
-                story={story} 
-                onClick={() => onStoryClick?.(story.id)}
-              />
-            ))
+            <div className="space-y-2">
+              {sprintStories.map(story => (
+                <UserStoryCard 
+                  key={story.id} 
+                  story={story} 
+                  onClick={() => onStoryClick?.(story.id)}
+                />
+              ))}
+            </div>
           )}
         </SortableContext>
-      </Card>
+      </div>
     </div>
   );
 }

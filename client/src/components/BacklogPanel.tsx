@@ -35,7 +35,10 @@ export default function BacklogPanel({ stories, onStoryClick }: BacklogPanelProp
   const sortedStories = [...filteredStories].sort((a, b) => {
     switch (sortBy) {
       case 'priority':
-        return a.priority.localeCompare(b.priority);
+        // Извлекаем число из строки "Высокий (1)", "Средний (2)", "Низкий (3)"
+        const priorityA = parseInt(a.priority.match(/\((\d+)\)/)?.[1] || '999');
+        const priorityB = parseInt(b.priority.match(/\((\d+)\)/)?.[1] || '999');
+        return priorityA - priorityB;
       case 'risk':
         const riskOrder = { high: 0, moderate: 1, low: 2 };
         return riskOrder[a.risk] - riskOrder[b.risk];
@@ -95,14 +98,16 @@ export default function BacklogPanel({ stories, onStoryClick }: BacklogPanelProp
         }`}
       >
         <SortableContext items={sortedStories.map(s => s.id)} strategy={verticalListSortingStrategy}>
-          {sortedStories.map(story => (
-            <UserStoryCard 
-              key={story.id} 
-              story={story} 
-              inBacklog 
-              onClick={() => onStoryClick?.(story.id)}
-            />
-          ))}
+          <div className="space-y-2">
+            {sortedStories.map(story => (
+              <UserStoryCard 
+                key={story.id} 
+                story={story} 
+                inBacklog 
+                onClick={() => onStoryClick?.(story.id)}
+              />
+            ))}
+          </div>
         </SortableContext>
       </div>
 
