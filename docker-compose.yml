@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  sprint-simulator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sprint-planning-simulator
+    ports:
+      - "3000:80"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
