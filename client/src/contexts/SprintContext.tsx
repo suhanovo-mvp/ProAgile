@@ -47,13 +47,51 @@ export const SprintProvider: React.FC<SprintProviderProps> = ({ children }) => {
     setStories(loadedStories);
   }, []);
 
+  // Автоматическое обновление статуса enabled при изменении назначений
+  useEffect(() => {
+    setStories(prev => prev.map(story => ({
+      ...story,
+      enabled: story.depends.length === 0 || story.depends.every(depId => {
+        const dependentStory = prev.find(s => s.id === depId);
+        return dependentStory && dependentStory.assignedTo !== null;
+      })
+    })));
+  }, [stories.map(s => s.assignedTo).join(',')]);
+
+  // Проверка зависимостей: карточка разблокируется если все предшественники назначены в спринты
   const checkDependencies = (story: UserStory, currentSprints: Sprint[]): boolean => {
     if (story.depends.length === 0) return true;
     
-    const allAssignedStories = stories.filter(s => s.assignedTo !== null);
-    return story.depends.every(depId => 
-      allAssignedStories.some(s => s.id === depId)
-    );
+    // Все зависимости должны быть назначены в какой-либо спринт
+    return story.depends.every(depId => {
+      const dependentStory = stories.find(s => s.id === depId);
+      return dependentStory && dependentStory.assignedTo !== null;
+    });
+  };
+
+  // Получить номер спринта для карточки (sprint-1 -> 1, sprint-2 -> 2, etc)
+  const getSprintNumber = (sprintId: string | number | null): number => {
+    if (!sprintId) return 0;
+    if (typeof sprintId === 'number') return sprintId;
+    const match = sprintId.match(/\d+/);
+    return match ? parseInt(match[0]) : 0;
+  };
+
+  // Проверка, может ли карточка быть добавлена в целевой спринт с учетом зависимостей
+  const canMoveToSprint = (story: UserStory, targetSprintId: string | number | null): boolean => {
+    if (story.depends.length === 0) return true;
+    if (!targetSprintId) return true; // Возврат в бэклог всегда разрешен
+
+    const targetSprintNum = getSprintNumber(targetSprintId);
+    
+    // Все зависимости должны быть в предыдущих или том же спринте
+    return story.depends.every(depId => {
+      const dependentStory = stories.find(s => s.id === depId);
+      if (!dependentStory || !dependentStory.assignedTo) return false;
+      
+      const depSprintNum = getSprintNumber(dependentStory.assignedTo);
+      return depSprintNum <= targetSprintNum;
+    });
   };
 
   const moveStory = (storyId: number, targetSprintId: string | number | null): boolean => {
@@ -71,12 +109,11 @@ export const SprintProvider: React.FC<SprintProviderProps> = ({ children }) => {
         currPoints: sprint.taskIds.filter(id => id !== storyId)
           .reduce((sum, id) => sum + (stories.find(s => s.id === id)?.points || 0), 0)
       })));
-      updateDependentStories();
       return true;
     }
 
-    // Проверка зависимостей
-    if (!checkDependencies(story, sprints)) {
+    // Проверка зависимостей с учетом спринтов
+    if (!canMoveToSprint(story, targetSprintId)) {
       return false;
     }
 
@@ -112,16 +149,10 @@ export const SprintProvider: React.FC<SprintProviderProps> = ({ children }) => {
       s.id === storyId ? { ...s, assignedTo: targetSprintId } : s
     ));
 
-    updateDependentStories();
     return true;
   };
 
-  const updateDependentStories = () => {
-    setStories(prev => prev.map(story => ({
-      ...story,
-      enabled: checkDependencies(story, sprints)
-    })));
-  };
+  // Функция updateDependentStories больше не нужна, так как useEffect автоматически обновляет enabled
 
   const resetSimulation = () => {
     setStories((userStoriesData as UserStory[]).map(story => ({
