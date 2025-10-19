@@ -90,8 +90,8 @@ export default function BacklogPanel({ stories, onStoryClick }: BacklogPanelProp
 
       <div
         ref={setNodeRef}
-        className={`transition-colors rounded-lg p-2 ${
-          isOver ? 'bg-teal-600' : ''
+        className={`transition-all duration-200 rounded-lg p-2 ${
+          isOver ? 'bg-teal-600 ring-2 ring-teal-400 shadow-lg' : ''
         }`}
       >
         <SortableContext items={sortedStories.map(s => s.id)} strategy={verticalListSortingStrategy}>

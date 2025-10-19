@@ -41,8 +41,8 @@ export default function SprintColumn({ sprint, stories, onStoryClick }: SprintCo
       
       <Card
         ref={setNodeRef}
-        className={`min-h-[500px] p-4 transition-colors ${
-          isOver ? 'bg-cyan-50 border-cyan-300' : 'bg-gray-50'
+        className={`min-h-[500px] p-4 transition-all duration-200 ${
+          isOver ? 'bg-cyan-100 border-2 border-cyan-500 shadow-lg ring-2 ring-cyan-300' : 'bg-gray-50 border border-gray-200'
         }`}
       >
         <SortableContext items={sprintStories.map(s => s.id)} strategy={verticalListSortingStrategy}>

@@ -199,11 +199,16 @@ export default function Home() {
           </div>
         </div>
 
-        <DragOverlay>
+        <DragOverlay dropAnimation={{
+          duration: 200,
+          easing: 'cubic-bezier(0.18, 0.67, 0.6, 1.22)',
+        }}>
           {activeId ? (
-            <UserStoryCard
-              story={stories.find(s => s.id === activeId)!}
-            />
+            <div className="rotate-3 scale-105 opacity-90">
+              <UserStoryCard
+                story={stories.find(s => s.id === activeId)!}
+              />
+            </div>
           ) : null}
         </DragOverlay>
       </DndContext>
