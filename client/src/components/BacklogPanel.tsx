@@ -1,4 +1,5 @@
 import { useDroppable } from '@dnd-kit/core';
+import { useState } from 'react';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { UserStory } from '@/types';
 import UserStoryCard from './UserStoryCard';
@@ -24,6 +25,7 @@ export default function BacklogPanel({ stories, onStoryClick }: BacklogPanelProp
   });
 
   const { searchTerm, setSearchTerm, sortBy, setSortBy } = useSprintContext();
+  const [showSortMenu, setShowSortMenu] = useState(false);
 
   const backlogStories = stories.filter(s => s.assignedTo === null);
 
@@ -67,53 +69,56 @@ export default function BacklogPanel({ stories, onStoryClick }: BacklogPanelProp
           />
         </div>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="w-full bg-white text-gray-900 hover:bg-gray-100">
-              <SortAsc className="w-4 h-4 mr-2" />
-              Сортировка
-              {sortBy && (
-                <span className="ml-auto text-xs text-teal-600 font-semibold">
-                  ✓
-                </span>
-              )}
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56 bg-white z-50 shadow-lg border border-gray-200">
-            <DropdownMenuItem 
-              onClick={() => setSortBy('priority')}
-              className={`cursor-pointer ${sortBy === 'priority' ? 'bg-teal-100 font-semibold' : ''}`}
-            >
-              <span className="mr-2">🔥</span>
-              По приоритету
-              {sortBy === 'priority' && <span className="ml-auto">✓</span>}
-            </DropdownMenuItem>
-            <DropdownMenuItem 
-              onClick={() => setSortBy('risk')}
-              className={`cursor-pointer ${sortBy === 'risk' ? 'bg-teal-100 font-semibold' : ''}`}
-            >
-              <span className="mr-2">⚠️</span>
-              По риску
-              {sortBy === 'risk' && <span className="ml-auto">✓</span>}
-            </DropdownMenuItem>
-            <DropdownMenuItem 
-              onClick={() => setSortBy('points')}
-              className={`cursor-pointer ${sortBy === 'points' ? 'bg-teal-100 font-semibold' : ''}`}
-            >
-              <span className="mr-2">📊</span>
-              По story points
-              {sortBy === 'points' && <span className="ml-auto">✓</span>}
-            </DropdownMenuItem>
-            <DropdownMenuItem 
-              onClick={() => setSortBy('alphabetical')}
-              className={`cursor-pointer ${sortBy === 'alphabetical' ? 'bg-teal-100 font-semibold' : ''}`}
-            >
-              <span className="mr-2">🔤</span>
-              По алфавиту
-              {sortBy === 'alphabetical' && <span className="ml-auto">✓</span>}
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="relative">
+          <button
+            onClick={() => setShowSortMenu(!showSortMenu)}
+            className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md bg-white text-gray-900 hover:bg-gray-100"
+          >
+            <SortAsc className="w-4 h-4 mr-2" />
+            Сортировка
+            {sortBy && (
+              <span className="ml-auto text-xs text-teal-600 font-semibold">
+                ✓
+              </span>
+            )}
+          </button>
+          {showSortMenu && (
+            <div className="absolute top-full left-0 mt-1 w-56 bg-white z-50 shadow-lg border border-gray-200 rounded-md overflow-hidden">
+              <button
+                onClick={() => { setSortBy('priority'); setShowSortMenu(false); }}
+                className={`w-full text-left px-4 py-2 hover:bg-gray-100 flex items-center ${sortBy === 'priority' ? 'bg-teal-100 font-semibold' : ''}`}
+              >
+                <span className="mr-2">🔥</span>
+                По приоритету
+                {sortBy === 'priority' && <span className="ml-auto">✓</span>}
+              </button>
+              <button
+                onClick={() => { setSortBy('risk'); setShowSortMenu(false); }}
+                className={`w-full text-left px-4 py-2 hover:bg-gray-100 flex items-center ${sortBy === 'risk' ? 'bg-teal-100 font-semibold' : ''}`}
+              >
+                <span className="mr-2">⚠️</span>
+                По риску
+                {sortBy === 'risk' && <span className="ml-auto">✓</span>}
+              </button>
+              <button
+                onClick={() => { setSortBy('points'); setShowSortMenu(false); }}
+                className={`w-full text-left px-4 py-2 hover:bg-gray-100 flex items-center ${sortBy === 'points' ? 'bg-teal-100 font-semibold' : ''}`}
+              >
+                <span className="mr-2">📊</span>
+                По story points
+                {sortBy === 'points' && <span className="ml-auto">✓</span>}
+              </button>
+              <button
+                onClick={() => { setSortBy('alphabetical'); setShowSortMenu(false); }}
+                className={`w-full text-left px-4 py-2 hover:bg-gray-100 flex items-center ${sortBy === 'alphabetical' ? 'bg-teal-100 font-semibold' : ''}`}
+              >
+                <span className="mr-2">🔤</span>
+                По алфавиту
+                {sortBy === 'alphabetical' && <span className="ml-auto">✓</span>}
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       <div
