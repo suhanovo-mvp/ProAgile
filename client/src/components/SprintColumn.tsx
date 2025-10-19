@@ -40,30 +40,31 @@ export default function SprintColumn({ sprint, stories, onStoryClick }: SprintCo
 
   const riskProportions = calculateRiskProportions();
 
-  // Определяем доминирующий риск для основного фона
-  const getDominantRisk = () => {
-    if (sprintStories.length === 0) return 'none';
+  // Создаём градиентную заливку пропорционально story points
+  const getRiskBackgroundStyle = () => {
+    if (sprintStories.length === 0) return {};
+    
     const { low, moderate, high } = riskProportions;
-    if (high >= low && high >= moderate) return 'high';
-    if (moderate >= low) return 'moderate';
-    return 'low';
-  };
-
-  const dominantRisk = getDominantRisk();
-
-  // Определяем цвет фона в зависимости от доминирующего риска
-  const getRiskBackgroundClass = () => {
-    if (sprintStories.length === 0) return 'bg-gray-50';
-    switch (dominantRisk) {
-      case 'low':
-        return 'bg-green-50 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,rgba(34,197,94,0.05)_10px,rgba(34,197,94,0.05)_20px)]';
-      case 'moderate':
-        return 'bg-yellow-50 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,rgba(234,179,8,0.05)_10px,rgba(234,179,8,0.05)_20px)]';
-      case 'high':
-        return 'bg-red-50 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,rgba(239,68,68,0.05)_10px,rgba(239,68,68,0.05)_20px)]';
-      default:
-        return 'bg-gray-50';
+    
+    // Создаём градиент с пропорциями
+    const gradientParts = [];
+    let currentPercent = 0;
+    
+    if (low > 0) {
+      gradientParts.push(`rgba(34, 197, 94, 0.15) ${currentPercent}%, rgba(34, 197, 94, 0.15) ${currentPercent + low}%`);
+      currentPercent += low;
     }
+    if (moderate > 0) {
+      gradientParts.push(`rgba(234, 179, 8, 0.15) ${currentPercent}%, rgba(234, 179, 8, 0.15) ${currentPercent + moderate}%`);
+      currentPercent += moderate;
+    }
+    if (high > 0) {
+      gradientParts.push(`rgba(239, 68, 68, 0.15) ${currentPercent}%, rgba(239, 68, 68, 0.15) ${currentPercent + high}%`);
+    }
+    
+    return {
+      background: `linear-gradient(to bottom, ${gradientParts.join(', ')}), repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0, 0, 0, 0.03) 10px, rgba(0, 0, 0, 0.03) 20px)`
+    };
   };
 
   return (
@@ -89,9 +90,10 @@ export default function SprintColumn({ sprint, stories, onStoryClick }: SprintCo
       
       <div
         ref={setNodeRef}
-        className={`min-h-[500px] p-4 rounded-lg transition-all duration-200 ${
-          isOver ? 'bg-cyan-100 border-2 border-cyan-500 shadow-lg ring-4 ring-cyan-300' : `${getRiskBackgroundClass()} border border-gray-200`
-        }`}
+        style={getRiskBackgroundStyle()}
+        className={`min-h-[400px] p-3 rounded-lg border border-gray-200 transition-all ${
+          isOver ? 'ring-2 ring-cyan-500 shadow-lg border-2 border-cyan-500' : ''
+        } ${sprintStories.length === 0 ? 'bg-gray-50' : ''}`}
       >
         <SortableContext items={sprintStories.map(s => s.id)} strategy={verticalListSortingStrategy}>
           {sprintStories.length === 0 ? (

@@ -97,6 +97,29 @@ export default function Home() {
     toast.success('Симуляция сброшена');
   };
 
+  const handleTestGradient = () => {
+    // Добавляем карточки с разными рисками в спринты для тестирования
+    
+    // Спринт 1: Low (2+1+2=5 points) + Moderate (2 points) = 71%/29%
+    moveStory(2, 'sprint-1');  // Выбрать товар - Low, 2 points
+    moveStory(3, 'sprint-1');  // Добавить в корзину - Low, 1 point
+    moveStory(1, 'sprint-1');  // Создать учетную запись - Low, 2 points
+    moveStory(11, 'sprint-1'); // Адаптивный дизайн - Moderate, 2 points
+    
+    // Спринт 2: Low (2+2=4 points) + Moderate (3 points) + High (3 points) = 40%/30%/30%
+    moveStory(6, 'sprint-2');  // Поиск товаров - Low, 2 points
+    moveStory(12, 'sprint-2'); // Изображения товаров - Low, 2 points
+    moveStory(13, 'sprint-2'); // Отзывы покупателей - Moderate, 3 points
+    moveStory(18, 'sprint-2'); // Рекомендации товаров - High, 3 points (зависит от #1)
+    
+    // Спринт 3: Low (1 point) + Moderate (3+3=6 points) = 14%/86%
+    moveStory(10, 'sprint-3'); // Мобильная версия - Low, 1 point
+    moveStory(17, 'sprint-3'); // Сравнение товаров - Moderate, 3 points
+    moveStory(19, 'sprint-3'); // Чат с поддержкой - Moderate, 3 points
+    
+    toast.success('Тестовые данные загружены! Градиентная индикация рисков активна');
+  };
+
   const handleDownloadPDF = async () => {
     try {
       toast.info('Генерация PDF...', { duration: 2000 });
@@ -157,6 +180,13 @@ export default function Home() {
               >
                 <Info className="w-4 h-4 mr-2" />
                 Инструкции
+              </Button>
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={handleTestGradient}
+              >
+                🎨 Тест градиента
               </Button>
               <Button
                 variant="outline"
