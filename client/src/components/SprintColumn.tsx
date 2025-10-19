@@ -18,6 +18,36 @@ export default function SprintColumn({ sprint, stories, onStoryClick }: SprintCo
   const sprintStories = stories.filter(s => s.assignedTo === sprint.id);
   const progressPercentage = (sprint.currPoints / sprint.maxPoints) * 100;
 
+  // Вычисляем средний уровень риска
+  const calculateAverageRisk = () => {
+    if (sprintStories.length === 0) return 'none';
+    const riskValues = { low: 1, moderate: 2, high: 3 };
+    const totalRisk = sprintStories.reduce((sum, story) => {
+      return sum + (riskValues[story.risk as keyof typeof riskValues] || 0);
+    }, 0);
+    const avgRisk = totalRisk / sprintStories.length;
+    if (avgRisk <= 1.5) return 'low';
+    if (avgRisk <= 2.5) return 'moderate';
+    return 'high';
+  };
+
+  const averageRisk = calculateAverageRisk();
+
+  // Определяем цвет фона в зависимости от риска
+  const getRiskBackgroundClass = () => {
+    if (sprintStories.length === 0) return 'bg-gray-50';
+    switch (averageRisk) {
+      case 'low':
+        return 'bg-green-50 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,rgba(34,197,94,0.05)_10px,rgba(34,197,94,0.05)_20px)]';
+      case 'moderate':
+        return 'bg-yellow-50 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,rgba(234,179,8,0.05)_10px,rgba(234,179,8,0.05)_20px)]';
+      case 'high':
+        return 'bg-red-50 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,rgba(239,68,68,0.05)_10px,rgba(239,68,68,0.05)_20px)]';
+      default:
+        return 'bg-gray-50';
+    }
+  };
+
   return (
     <div className="flex-1 min-w-[280px]">
       <div className="mb-3">
@@ -42,7 +72,7 @@ export default function SprintColumn({ sprint, stories, onStoryClick }: SprintCo
       <div
         ref={setNodeRef}
         className={`min-h-[500px] p-4 rounded-lg transition-all duration-200 ${
-          isOver ? 'bg-cyan-100 border-2 border-cyan-500 shadow-lg ring-4 ring-cyan-300' : 'bg-gray-50 border border-gray-200'
+          isOver ? 'bg-cyan-100 border-2 border-cyan-500 shadow-lg ring-4 ring-cyan-300' : `${getRiskBackgroundClass()} border border-gray-200`
         }`}
       >
         <SortableContext items={sprintStories.map(s => s.id)} strategy={verticalListSortingStrategy}>
