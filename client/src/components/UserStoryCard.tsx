@@ -66,7 +66,9 @@ export default function UserStoryCard({ story, inBacklog = false, onClick }: Use
                     e.stopPropagation();
                     onClick();
                   }}
-                  className="p-1 hover:bg-gray-100 rounded-full transition-colors flex-shrink-0"
+                  onPointerDown={(e) => e.stopPropagation()}
+                  onMouseDown={(e) => e.stopPropagation()}
+                  className="p-1 hover:bg-gray-100 rounded-full transition-colors flex-shrink-0 cursor-pointer"
                   title="Показать детали"
                 >
                   <Info className="w-4 h-4 text-blue-600" />
