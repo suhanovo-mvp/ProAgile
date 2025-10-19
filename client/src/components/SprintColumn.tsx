@@ -18,25 +18,43 @@ export default function SprintColumn({ sprint, stories, onStoryClick }: SprintCo
   const sprintStories = stories.filter(s => s.assignedTo === sprint.id);
   const progressPercentage = (sprint.currPoints / sprint.maxPoints) * 100;
 
-  // Вычисляем средний уровень риска
-  const calculateAverageRisk = () => {
-    if (sprintStories.length === 0) return 'none';
-    const riskValues = { low: 1, moderate: 2, high: 3 };
-    const totalRisk = sprintStories.reduce((sum, story) => {
-      return sum + (riskValues[story.risk as keyof typeof riskValues] || 0);
-    }, 0);
-    const avgRisk = totalRisk / sprintStories.length;
-    if (avgRisk <= 1.5) return 'low';
-    if (avgRisk <= 2.5) return 'moderate';
-    return 'high';
+  // Вычисляем пропорции риска по story points
+  const calculateRiskProportions = () => {
+    if (sprintStories.length === 0) return { low: 0, moderate: 0, high: 0 };
+    
+    const totalPoints = sprintStories.reduce((sum, story) => sum + story.points, 0);
+    const riskPoints = { low: 0, moderate: 0, high: 0 };
+    
+    sprintStories.forEach(story => {
+      if (story.risk === 'low') riskPoints.low += story.points;
+      else if (story.risk === 'moderate') riskPoints.moderate += story.points;
+      else if (story.risk === 'high') riskPoints.high += story.points;
+    });
+    
+    return {
+      low: totalPoints > 0 ? (riskPoints.low / totalPoints) * 100 : 0,
+      moderate: totalPoints > 0 ? (riskPoints.moderate / totalPoints) * 100 : 0,
+      high: totalPoints > 0 ? (riskPoints.high / totalPoints) * 100 : 0,
+    };
   };
 
-  const averageRisk = calculateAverageRisk();
+  const riskProportions = calculateRiskProportions();
 
-  // Определяем цвет фона в зависимости от риска
+  // Определяем доминирующий риск для основного фона
+  const getDominantRisk = () => {
+    if (sprintStories.length === 0) return 'none';
+    const { low, moderate, high } = riskProportions;
+    if (high >= low && high >= moderate) return 'high';
+    if (moderate >= low) return 'moderate';
+    return 'low';
+  };
+
+  const dominantRisk = getDominantRisk();
+
+  // Определяем цвет фона в зависимости от доминирующего риска
   const getRiskBackgroundClass = () => {
     if (sprintStories.length === 0) return 'bg-gray-50';
-    switch (averageRisk) {
+    switch (dominantRisk) {
       case 'low':
         return 'bg-green-50 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,rgba(34,197,94,0.05)_10px,rgba(34,197,94,0.05)_20px)]';
       case 'moderate':
