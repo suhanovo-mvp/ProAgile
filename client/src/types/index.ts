@@ -1,3 +1,4 @@
+// Интерфейс пользовательской истории
 export interface UserStory {
   id: number;
   label: string;
