@@ -10,6 +10,8 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useState } from 'react';
 
+// Модальное окно с вкладками: О кейсе + Инструкции
+
 interface InstructionsModalProps {
   isOpen: boolean;
   onClose: () => void;
