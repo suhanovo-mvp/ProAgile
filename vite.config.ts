@@ -11,6 +11,7 @@ const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(
 export default defineConfig({
   plugins,
   // Use /ProAgile/ only for GitHub Pages, root path for Manus.Space
+  // GITHUB_ACTIONS is set to 'true' only in GitHub Actions CI/CD environment
   base: process.env.GITHUB_ACTIONS === 'true' ? '/ProAgile/' : '/',
   resolve: {
     alias: {
