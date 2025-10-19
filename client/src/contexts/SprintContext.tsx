@@ -127,9 +127,9 @@ export const SprintProvider: React.FC<SprintProviderProps> = ({ children }) => {
       assignedTo: null,
     })));
     setSprints([
-      { id: 1, label: 'Спринт 1', maxPoints: 20, currPoints: 0, taskIds: [] },
-      { id: 2, label: 'Спринт 2', maxPoints: 20, currPoints: 0, taskIds: [] },
-      { id: 3, label: 'Спринт 3', maxPoints: 20, currPoints: 0, taskIds: [] },
+      { id: 'sprint-1', label: 'Спринт 1', maxPoints: 20, currPoints: 0, taskIds: [] },
+      { id: 'sprint-2', label: 'Спринт 2', maxPoints: 20, currPoints: 0, taskIds: [] },
+      { id: 'sprint-3', label: 'Спринт 3', maxPoints: 20, currPoints: 0, taskIds: [] },
     ]);
     setSearchTerm('');
   };
