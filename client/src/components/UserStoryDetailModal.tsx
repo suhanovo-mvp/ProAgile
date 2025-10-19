@@ -8,6 +8,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { UserStory } from "@/types";
 import { AlertCircle, Clock, Target, Users } from "lucide-react";
+import { useSprintContext } from "@/contexts/SprintContext";
 
 interface UserStoryDetailModalProps {
   story: UserStory | null;
@@ -20,7 +21,15 @@ export default function UserStoryDetailModal({
   open,
   onOpenChange,
 }: UserStoryDetailModalProps) {
+  const { stories } = useSprintContext();
+  
   if (!story) return null;
+  
+  // Функция для получения названия истории по ID
+  const getStoryLabel = (id: number): string => {
+    const dependentStory = stories.find(s => s.id === id);
+    return dependentStory ? dependentStory.label : `История #${id}`;
+  };
 
   const priorityColors: Record<string, string> = {
     "1": "bg-red-100 text-red-800 border-red-300",
@@ -124,7 +133,7 @@ export default function UserStoryDetailModal({
                 <ul className="list-disc list-inside space-y-1">
                   {story.depends.map((depId: number) => (
                     <li key={depId} className="text-amber-900 font-medium">
-                      История #{depId}
+                      История #{depId} ({getStoryLabel(depId)})
                     </li>
                   ))}
                 </ul>

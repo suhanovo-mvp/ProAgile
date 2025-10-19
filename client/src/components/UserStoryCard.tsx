@@ -59,7 +59,7 @@ export default function UserStoryCard({ story, inBacklog = false, onClick }: Use
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
-              <h3 className="font-semibold text-sm truncate flex-1">{story.label}</h3>
+              <h3 className="font-semibold text-sm truncate flex-1">#{story.id} {story.label}</h3>
               {onClick && (
                 <button
                   onClick={(e) => {
