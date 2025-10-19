@@ -3,7 +3,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { UserStory } from '@/types';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { AlertCircle, Lock } from 'lucide-react';
+import { AlertCircle, Lock, Info } from 'lucide-react';
 
 interface UserStoryCardProps {
   story: UserStory;
@@ -52,22 +52,26 @@ export default function UserStoryCard({ story, inBacklog = false, onClick }: Use
       {...listeners}
       className={`${isDisabled ? 'opacity-50 cursor-not-allowed' : 'cursor-grab active:cursor-grabbing'}`}
     >
-      <Card 
-        className={`p-3 mb-2 hover:shadow-md transition-shadow ${isDisabled ? 'bg-gray-100' : 'bg-white'}`}
-        onClick={(e) => {
-          if (!isDisabled && onClick) {
-            e.stopPropagation();
-            onClick();
-          }
-        }}
-      >
+      <Card className={`p-3 mb-2 hover:shadow-md transition-shadow ${isDisabled ? 'bg-gray-100' : 'bg-white'}`}>
         <div className="flex items-start gap-3">
           <div className={`w-8 h-8 rounded-full ${getPriorityColor(story.priority)} flex items-center justify-center text-white font-bold text-sm flex-shrink-0`}>
             {story.points}
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
-              <h3 className="font-semibold text-sm truncate">{story.label}</h3>
+              <h3 className="font-semibold text-sm truncate flex-1">{story.label}</h3>
+              {!isDisabled && onClick && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onClick();
+                  }}
+                  className="p-1 hover:bg-gray-100 rounded-full transition-colors flex-shrink-0"
+                  title="Показать детали"
+                >
+                  <Info className="w-4 h-4 text-blue-600" />
+                </button>
+              )}
               {isDisabled && <Lock className="w-4 h-4 text-gray-400 flex-shrink-0" />}
             </div>
             <p className="text-xs text-gray-600 mb-2 line-clamp-2">{story.description}</p>
