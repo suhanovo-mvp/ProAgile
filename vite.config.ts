@@ -10,7 +10,8 @@ const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(
 
 export default defineConfig({
   plugins,
-  base: process.env.NODE_ENV === 'production' ? '/ProAgile/' : '/',
+  // Use /ProAgile/ only for GitHub Pages, root path for Manus.Space
+  base: process.env.GITHUB_ACTIONS === 'true' ? '/ProAgile/' : '/',
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),
