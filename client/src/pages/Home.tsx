@@ -51,17 +51,22 @@ export default function Home() {
 
     let targetSprintId: string | number | null = null;
 
+    // Если бросили на backlog
     if (targetId === 'backlog') {
       targetSprintId = null;
-    } else if (typeof targetId === 'number' || typeof targetId === 'string') {
+    }
+    // Если бросили на спринт (ID начинается с 'sprint-')
+    else if (typeof targetId === 'string' && targetId.startsWith('sprint-')) {
       const sprint = sprints.find(s => s.id === targetId);
       if (sprint) {
         targetSprintId = sprint.id;
-      } else {
-        const story = stories.find(s => s.id === targetId);
-        if (story && story.assignedTo) {
-          targetSprintId = story.assignedTo;
-        }
+      }
+    }
+    // Если бросили на карточку (ID это число)
+    else if (typeof targetId === 'number') {
+      const story = stories.find(s => s.id === targetId);
+      if (story && story.assignedTo !== undefined) {
+        targetSprintId = story.assignedTo;
       }
     }
 
